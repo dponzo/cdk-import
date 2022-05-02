@@ -31,6 +31,11 @@ export interface RenderCodeOptions {
    * The name of the Java package to use for the generated code. Required if `language` is `java`.
    */
   readonly javaPackage?: string;
+
+  /**
+   * The name of the C# namespace to use for the generated code. Required if `language` is `csharp`.
+   */
+  readonly csharpNamespace?: string;
 }
 
 export async function renderCode(options: RenderCodeOptions) {
@@ -51,9 +56,13 @@ export async function renderCode(options: RenderCodeOptions) {
       break;
 
     case 'csharp':
+      if (!options.csharpNamespace) {
+        throw new Error('C# namespace name (`--csharp-namespace`) must be specified (e.g. "AWS::Foo::Bar")');
+      }
+
       srcmakopts.csharp = {
         outdir: options.outdir,
-        namespace: options.typeName, // already AWS::Foo::Bar
+        namespace: options.csharpNamespace,
       };
       break;
 

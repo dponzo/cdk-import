@@ -1,6 +1,8 @@
 import * as AWS from 'aws-sdk';
 import { createAwsClient } from './aws';
 
+AWS.config.update({ region: 'us-east-1' });
+
 export interface IServiceCatalogClient {
   searchProducts(input: AWS.ServiceCatalog.ListPortfoliosInput): Promise<AWS.ServiceCatalog.ListPortfoliosOutput>;
   describeProvisioningParameters(input: AWS.ServiceCatalog.DescribeProvisioningParametersInput):
