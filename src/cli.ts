@@ -45,7 +45,23 @@ const args = minimist(parsedCommandsAndArgv.argv, {
 function showHelp() {
   console.log('');
   console.log('Usage:');
+  console.log('  cdk-import SUBCOMMAND (cfn or sc, default is cfn');
+  console.log();
+  console.log('General options:');
+  console.log('  -l, --language     Output programming language                               [string]');
+  console.log('  -o, --outdir       Output directory                                          [string]');
+  console.log('  --go-module        Go module name (required if language is "golang")         [string]');
+  console.log('  --java-package     Java package name (required if language is "java")        [string]');
+  console.log('  -h, --help         Show usage info (include subcommand to see specific help) [boolean]');
+  console.log('');
+  console.log();
+}
+
+function showCfnHelp() {
+  console.log('');
+  console.log('Usage:');
   console.log('  cdk-import -l LANGUAGE RESOURCE-NAME[@VERSION]');
+  console.log('  cdk-import cfn -l LANGUAGE RESOURCE-NAME[@VERSION]');
   console.log();
   console.log('Options:');
   console.log('  -l, --language     Output programming language                            [string]');
@@ -74,6 +90,38 @@ function showHelp() {
   console.log();
 }
 
+function showSCHelp() {
+  console.log('');
+  console.log('Usage:');
+  console.log('  cdk-import sc -l LANGUAGE');
+  console.log('  cdk-import sc -l LANGUAGE -pr PRODUCT-ID -pa PROVISIONING-ARTIFACT-ID -lp LAUNCH-PATH-ID');
+  console.log();
+  console.log('Options:');
+  console.log('  -l, --language                  Output programming language                            [string]');
+  console.log('  -o, --outdir                    Output directory                                       [string]');
+  console.log('  -pr, --productId                Product Id                                             [string]');
+  console.log('  -pa, --provisioningArtifactId   Provisioning artifact Id                               [string]');
+  console.log('  -lp, --launchPathId             Launch path Id                                         [string]');
+  console.log('  --go-module                     Go module name (required if language is "golang")      [string]');
+  console.log('  --java-package                  Java package name (required if language is "java")     [string]');
+  console.log('  --csharp-namespace              C# namespace name (required if language is "csharp"    [string]');
+  console.log('  --private                       Import types registered in your AWS account/region     [boolean]');
+  console.log('  -h, --help                      Show this usage info                                   [boolean]');
+  console.log('');
+  console.log('Examples:');
+  console.log();
+  console.log('  Generates constructs for the latest version of prodcuts in TypeScript:');
+  console.log('    cdk-import sc -l typescript');
+  console.log();
+  console.log('  Generates construct in Go for a specific product version:');
+  console.log('    cdk-import sc -l golang --go-module "github.com/account/repo" -pr prod-abc123 -pa pa-abc123 -lp lp-abc123');
+  console.log();
+  console.log('  Generates constructs in Python under the "src" subfolder instead of working directory:');
+  console.log('    cdk-import sc -l python -o src');
+  console.log();
+  console.log();
+}
+
 void (async () => {
   if (args.help) {
     showHelp();
@@ -90,7 +138,7 @@ void (async () => {
 
   if (subCommand == 'cfn') {
     if (args._.length !== 1) {
-      showHelp();
+      showCfnHelp();
       process.exit(1);
     }
 
@@ -122,7 +170,7 @@ void (async () => {
       const ppArgs = [args.pr, args.pa, args.lp].filter( param => param != undefined);
 
       if (args.help || (ppArgs.length > 0 && ppArgs.length != 3)) {
-        showHelp();
+        showSCHelp();
         process.exit(1);
       }
 
