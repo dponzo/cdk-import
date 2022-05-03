@@ -22,7 +22,7 @@ Options:
   --go-module        Go module name (required if language is "golang")      [string]
   --java-package     Java package name (required if language is "java")     [string]
   --private          Import types registered in your AWS account and region [boolean]
-  -h, --help         Show this usage info                                   [boolean]
+  -h, --help         Show     usage info                                    [boolean]
 ```
 
 The `--language` option specifies the output programming language. Supported
@@ -152,20 +152,19 @@ all available products that it can disambiguate provisioning artifacts and launc
 
 ```shell
 Usage:
-  cdk-import sc -l
+  cdk-import sc -l LANGUAGE
   cdk-import sc -l LANGUAGE -pr PRODUCT-ID -pa PROVISIONING-ARTIFACT-ID -lp LAUNCH-PATH-ID
 
 Options:
-  -l, --language                   Output programming language                            [string]
-  -o, --outdir                     Output directory (default "./sc-products")             [string]
-  -pr, --productId                 Product Id                                             [string]
-  -pa, --provisioningArtifactId    Provisioning artifact Id                               [string]
-  -lp, --launchPathId              Launch path Id                                         [string]
-  --go-module                      Go module name (required if language is "golang")      [string]
-  --java-package                   Java package name (required if language is "java")     [string]
-  --csharp-namespace               C# namespace name (required if language is "csharp"    [string]
-                                     and using the servicecatalog command)
-  -h, --help                       Show this usage info                                  [boolean]
+  -l, --language                   Output programming language                           [string]
+  -o, --outdir                     Output directory (default "./sc-products")            [string]
+  -pr, --productId                 Product Id                                            [string]
+  -pa, --provisioningArtifactId    Provisioning artifact Id                              [string]
+  -lp, --launchPathId              Launch path Id                                        [string]
+  --go-module                      Go module name (required if language is "golang")     [string]
+  --java-package                   Java package name (required if language is "java")    [string]
+  --csharp-namespace               C# namespace name (required if language is "csharp")  [string]
+  -h, --help                       Show usage info                                       [boolean]
 ```
 
 The `--language` option specifies the output programming language. Supported
@@ -215,40 +214,24 @@ resource name (`AWSQS::EKS::Cluster`).
 For example:
 
 ```shell
-cdk-import -l csharp AWSQS::EKS::Cluster 
+cdk-import -l csharp --csharp-namespace AWS::MY::PRODUCT -pr PROD-ABC123 -pa PA-ABC123 -lp LP-ABC123
 ```
 
-Will generate a directory `AWSQS::EKS::Cluster` with a `.csproj`. This can be
+Will generate a directory `AWS::MY::PRODUCT` with a `.csproj`. This can be
 used in a .NET solution.
 
 ### TypeScript
 
-A TypeScript file will be generated under `$outdir/MODULE` where `MODULE` is
-derived from the resource name.
+TypeScript file(s) will be generated under `$outdir/PRODUCT_NAME` where `PRODUCT_NAME` is
+derived from the product version.
 
 For example:
 
 ```shell
-cdk-import -l typescript -o src AWSQS::EKS::Cluster
+cdk-import -l typescript -o src
 ```
 
-Will generate a file `src/awsqs-eks-cluster.ts` (note the usage of `-o` above).
-
-### Go
-
-If `-l golang` is used, the `--go-module` option is required and must reflect
-the Go module name of the parent project module.
-
-A Go submodule will be generated under `$outdir/PACKAGE` where `PACKAGE` is
-derived from the resource name (`AWSQS::EKS::Cluster` => `awsqs-eks-cluster`).
-
-For example:
-
-```shell
-cdk-import -l golang --go-module "github.com/foo/bar" AWSQS::EKS::Cluster
-```
-
-Will generate a Go module under: `awsqs-eks-cluster`.
+Will generate a file `src/ec2-compute-instance.ts` (note the usage of `-o` above).
 
 ## Examples
 
