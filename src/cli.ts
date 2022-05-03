@@ -44,28 +44,18 @@ const args = minimist(parsedCommandsAndArgv.argv, {
 
 function showHelp() {
   console.log('');
-  console.log('Usage for CloudFormation imports:');
+  console.log('Usage:');
   console.log('  cdk-import -l LANGUAGE RESOURCE-NAME[@VERSION]');
-  console.log('  cdk-import cfn -l LANGUAGE RESOURCE-NAME[@VERSION]');
-  console.log();
-  console.log('Usage for Service Catalog imports:');
-  console.log('  cdk-import sc -l LANGUAGE');
-  console.log('  cdk-import sc -l LANGUAGE -pr PRODUCT-ID -pa PROVISIONING-ARTIFACT-ID -lp LAUNCH-PATH-ID');
   console.log();
   console.log('Options:');
-  console.log('  -l, --language                  Output programming language                            [string]');
-  console.log('  -o, --outdir                    Output directory                                       [string]');
-  console.log('  -pr, --productId                Product Id                                             [string]');
-  console.log('  -pa, --provisioningArtifactId   Provisioning artifact Id                               [string]');
-  console.log('  -lp, --launchPathId             Launch path Id                                         [string]');
-  console.log('  --go-module                     Go module name (required if language is "golang")      [string]');
-  console.log('  --java-package                  Java package name (required if language is "java")     [string]');
-  console.log('  --csharp-namespace              C# namespace name (required if language is "csharp"    [string]');
-  console.log('                                    and using the servicecatalog command)');
-  console.log('  --private                       Import types registered in your AWS account/region    [boolean]');
-  console.log('  -h, --help                      Show this usage info                                  [boolean]');
+  console.log('  -l, --language     Output programming language                            [string]');
+  console.log('  -o, --outdir       Output directory                                       [string]  [default: "."]');
+  console.log('  --go-module        Go module name (required if language is "golang")      [string]');
+  console.log('  --java-package     Java package name (required if language is "java")     [string]');
+  console.log('  --private          Import types registered in your AWS account and region [boolean]');
+  console.log('  -h, --help         Show this usage info                                   [boolean]');
   console.log('');
-  console.log('Examples for CloudFormation Imports:');
+  console.log('Examples:');
   console.log();
   console.log('  Generates constructs for the latest version AWSQS::EKS::Cluster in TypeScript:');
   console.log('    cdk-import -l typescript AWSQS::EKS::Cluster');
@@ -81,14 +71,6 @@ function showHelp() {
   console.log();
   console.log('  Generates construct for a private type:');
   console.log('    cdk-import -l typescript --private Acme::SuperService::Friend::MODULE');
-  console.log();
-  console.log('Examples for Service Catalog Imports:');
-  console.log();
-  console.log('  Generates construct for the a specified product version in TypeScript:');
-  console.log('    cdk-import sc -l typescript -pr prod-abc123 -pa pa-abc123 -lp lp-abc123');
-  console.log();
-  console.log('  Generates constructs for the all available products in python under "src" subfolder:');
-  console.log('    cdk-import sc -l python -pr -o src');
   console.log();
 }
 
