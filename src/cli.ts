@@ -45,7 +45,7 @@ const args = minimist(parsedCommandsAndArgv.argv, {
 function showHelp() {
   console.log('');
   console.log('Usage:');
-  console.log('  cdk-import SUBCOMMAND (cfn or sc, default is cfn');
+  console.log('  cdk-import SUBCOMMAND (cfn or sc, default is cfn)');
   console.log();
   console.log('General options:');
   console.log('  -l, --language     Output programming language                               [string]');
